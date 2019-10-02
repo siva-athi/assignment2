@@ -39,6 +39,11 @@ def common_genes(dict1,dict2):
     set1 = set(list(dict1.keys()))
     set2 = set(list(dict2.keys()))
     common_set=set.intersection(set1,set2)
+    print(common_set)
+    s=""
+    for i in common_set:
+        s=s+i+', '
+    print(s[:-2])
     return(common_set)
 def unique_genes(dict1,dict2):
     global uniq_g1,uniq_g2
@@ -83,7 +88,6 @@ def motif_finder(mydict):
 
 
     return()
-motif_finder(mydict)
 
 
 
