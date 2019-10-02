@@ -1,5 +1,9 @@
 from Bio import SeqIO
 import re
+
+from numpy.ma import count
+
+
 def get_seq_fasta(filename):
     global mydict
     record_iterator = SeqIO.parse(filename,"fasta")
@@ -72,8 +76,12 @@ common_genes(dict1,dict2)
 compare(dict1,dict2,common_set)
 def motif_finder(mydict):
     for k, v in mydict.items():
-      comp=re.compile("(AAG[ATGC]{2}AA)+")
-      print(comp.findall(v))
+      comp=re.compile("(AAG[ATGC]{0,2}AA)")
+      c= (comp.findall(v))
+      res=[(i,count(c)) for i in c ]
+      print(res)
+
+
     return()
 motif_finder(mydict)
 
