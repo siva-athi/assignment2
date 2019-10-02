@@ -19,3 +19,4 @@ def get_expression(file_name):
         dict0[x[0]]=x[1]+':'+x[2]+':'+exp
     return dict0, col1, col2, col3, col4
 get_expression('cancer_lung_expression.txt')
+"ATGC—-CCTA","AGGCTTCTTA"
