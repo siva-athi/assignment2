@@ -5,17 +5,16 @@ sys.argv
 from numpy.ma import count
 import getopt
 # initiate the parser
-print(len(sys.argv))
 getopt.getopt(sys.argv[1:],"f:l:p:",["fasta=,lung=,pros="])
 gene=sys.argv[1]
 lung=sys.argv[2]
 pros=sys.argv[3]
 
-
 def get_seq_fasta(filename):
     global mydict
     record_iterator = SeqIO.parse(filename,"fasta")
     mydict={}
+    print(mydict)
     for i in record_iterator:
         mydict[i.id] = str(i.seq)
 
@@ -87,11 +86,19 @@ def motif_finder(mydict):
     for k, v in mydict.items():
       comp=re.compile("(AAG[ATGC]{0,2}AA)")
       c= (comp.findall(v))
-      res=[(i,count(c)) for i in c ]
-      #print(res)
+      dic456={}
+      dict123={}
+      for i in c:
+          if i not in dic456.keys():
+              dic456[i] = 1
+          else:
+              dic456[i]+= 1
+      dict123[k]=str(dic456)
+      print(dict123)
     return()
 
 get_seq_fasta(gene)
+print(mydict)
 get_expression(lung)
 dict1=dict
 print('2. Expression Data for cancer_lung_expression.txt')
@@ -114,6 +121,6 @@ print("6. Genes unique for cancer_lung_expression.txt")
 print(u[:-2])
 print("7. Genes unique for cancer_prostate_expression.txt")
 print(v[:-2])
-
+motif_finder(mydict)
 
 
