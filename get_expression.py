@@ -3,12 +3,10 @@ import re
 import sys
 sys.argv
 from numpy.ma import count
-import argparse
+import getopt
 # initiate the parser
 print(len(sys.argv))
-parse = argparse.ArgumentParser()
-parse.add_argument("-f", "--fas","-l","--lung=","-p","--pros=")
-args = parse.parse_args()
+getopt.getopt(sys.argv[1:],"f:l:p:",["fasta=,lung=,pros="])
 gene=sys.argv[1]
 lung=sys.argv[2]
 pros=sys.argv[3]
