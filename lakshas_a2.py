@@ -149,7 +149,7 @@ print("\n")
 print("7. Genes unique for cancer_prostate_expression.txt")
 print(v[:-2])               #printing based on the output format
 print("\n")
-q1=input("Which set do you want to examine (5|6|7)")
+q1=input("8. Which set do you want to examine (5|6|7)")
 print("\n")
 print("8. Your answer is [{0}]".format(q1))
 print("We will do motif finding for the following sequences:")
