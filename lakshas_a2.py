@@ -149,13 +149,13 @@ print("\n")
 print("7. Genes unique for cancer_prostate_expression.txt")
 print(v[:-2])               #printing based on the output format
 print("\n")
-q1=input("8. Which set do you want to examine (5|6|7)")
+q1=input("8. Which set do you want to examine (5|6|7) ")
 print("\n")
 print("8. Your answer is [{0}]".format(q1))
 print("We will do motif finding for the following sequences:")
 if q1=="5":                                   #if condition to select whcih set of gene we want to do the motif identification for
     z=common_set
-    print(s[:-2])                       # printing based on the output format
+    print(s[:-2]+"\n")                       # printing based on the output format
     motif_finder(mydict)
     for k,v in dict123.items():
         print(k)
@@ -165,7 +165,7 @@ if q1=="5":                                   #if condition to select whcih set 
         print("...\n")
 elif q1=="6":
     z=uniq_g1
-    print(u[:-2])
+    print(u[:-2]+"\n")
     motif_finder(mydict)
     for k,v in dict123.items():
         print(k)
@@ -176,7 +176,7 @@ elif q1=="6":
 
 elif q1=="7":
     z=uniq_g2
-    print(v[:-2])
+    print(v[:-2]+"\n")
     motif_finder(mydict)
     for k,v in dict123.items():
         print(k)
