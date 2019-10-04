@@ -1,24 +1,33 @@
 from Bio import SeqIO
 import re
 import sys
-sys.argv
-from numpy.ma import count
 import getopt
-# initiate the parser
-getopt.getopt(sys.argv[1:],"f:l:p:",["fasta=,lung=,pros="])
-gene=sys.argv[1]
-lung=sys.argv[2]
-pros=sys.argv[3]
-
+argv = sys.argv[1:]
+gene = ''
+lung = ''
+pros = ''
+try:
+    opts, args = getopt.getopt(argv, "hf:l:p:", ["faa=","lung=","pros="])
+except getopt.GetoptError:
+    print('Please enter invalid option(s)!')
+    print('Usage: lakshas_a2.py -f <faa> -l <lung>,-p <prostate>')
+    sys.exit(2)
+for opt, arg in opts:
+    if opt == '-h':
+        print('this files test gene expression.')  # need more work
+        sys.exit()
+    elif opt in ("-f", "--faa"):
+        gene = arg
+    elif opt in ("-l", "--lung"):
+        lung = arg
+    elif opt in ("-p", "--pros"):
+        pros = arg
 def get_seq_fasta(filename):
     global mydict
     record_iterator = SeqIO.parse(filename,"fasta")
     mydict={}
-    print(mydict)
     for i in record_iterator:
         mydict[i.id] = str(i.seq)
-
-    #print(dict)
     return(mydict)
 def get_expression(file_name):
     fh = open(file_name)
@@ -83,44 +92,92 @@ def compare(dict1, dict2,common_set):
         print(c)
     return ()
 def motif_finder(mydict):
-    for k, v in mydict.items():
-      comp=re.compile("(AAG[ATGC]{0,2}AA)")
-      c= (comp.findall(v))
-      dic456={}
-      dict123={}
-      for i in c:
-          if i not in dic456.keys():
-              dic456[i] = 1
-          else:
-              dic456[i]+= 1
-      dict123[k]=str(dic456)
-      print(dict123)
-    return()
+    global dict123,dic456
+    dict123 = {}
+    for k,v in mydict.items():
+
+        comp=re.compile("(AAG[ATGC]{0,2}AA)")
+        if k in z:
+            c= (comp.findall(v))
+            dic456={}
+            for i in c:
+                if i not in dic456.keys():
+                    dic456[i] = 1
+                else:
+                    dic456[i]+= 1
+            dict123[k]= dic456
+    #print(dict123)
+    return(dict123)
+
 
 get_seq_fasta(gene)
-print(mydict)
+
+print("1. Files: FASTA "+"("+gene+")"+ " Cancer Exp "+ "("+lung+","+pros+")\n")
 get_expression(lung)
 dict1=dict
 print('2. Expression Data for cancer_lung_expression.txt')
 print(col1+" "+col2+":"+col3+":"+col4)
 for k,v in dict1.items():
     print(k+' '+v)
+print("...\n")
 get_expression(pros)
 dict2=dict
 print('3. Expression Data for cancer_prostate_expression.txt')
 print(col1+" "+col2+":"+col3+":"+col4)
 for k,v in dict2.items():
     print(k+' '+v)
+print("...\n")
 common_genes(dict1,dict2)
 print("4. Expression Comparison (cancer_lung_expression.txt) vs (cancer_prostate_expression.txt)")
 compare(dict1,dict2,common_set)
+print("...\n")
 print("5. Common Genes for cancer_lung_expression.txt and cancer_prostate_expression.txt")
 print(s[:-2])
+print("\n")
 unique_genes(dict1,dict2)
 print("6. Genes unique for cancer_lung_expression.txt")
 print(u[:-2])
+print("\n")
 print("7. Genes unique for cancer_prostate_expression.txt")
 print(v[:-2])
-motif_finder(mydict)
+print("\n")
+q1=input("Which set do you want to examine (5|6|7)")
+print("\n")
+print("8. Your answer is [{0}]".format(q1))
+print("We will do motif finding for the following sequences:")
+if q1=="5":
+    z=common_set
+    print(s[:-2])
+    motif_finder(mydict)
+    for k,v in dict123.items():
+        print(k)
+        print("Motif\tFrequency")
+        for g,h in v.items():
+            print(g+"\t"+str(h))
+        print("...\n")
+elif q1=="6":
+    z=uniq_g1
+    print(u[:-2])
+    motif_finder(mydict)
+    for k,v in dict123.items():
+        print(k)
+        print("Motif\tFrequency")
+        for g,h in v.items():
+            print(g+"\t"+str(h))
+        print("...\n")
+
+elif q1=="7":
+    z=uniq_g2
+    print(v[:-2])
+    motif_finder(mydict)
+    for k,v in dict123.items():
+        print(k)
+        print("Motif\tFrequency")
+        for g,h in v.items():
+            print(g+"\t"+str(h))
+        print("...\n")
+else:
+     print("error, please enter valid input")
+     sys.exit()
 
 
